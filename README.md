@@ -56,7 +56,7 @@ There are several unique options that are valid only for this module.
 
 You should also consider using the extended globbing (extglob) feature
 of [bash(1)](http://man.he.net/man1/bash) or similar. For example, you can use `!(*.EN).md`,
-which would specify files matching \*.md minus those matching
+which would specify files matching `*.md` minus those matching
 `*.EN.md`.
 
 # AUTHOR

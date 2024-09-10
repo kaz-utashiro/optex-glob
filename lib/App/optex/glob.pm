@@ -135,7 +135,7 @@ the filename.
 
 You should also consider using the extended globbing (extglob) feature
 of L<bash(1)> or similar. For example, you can use C<!(*.EN).md>,
-which would specify files matching *.md minus those matching
+which would specify files matching C<*.md> minus those matching
 C<*.EN.md>.
 
 =head1 AUTHOR
