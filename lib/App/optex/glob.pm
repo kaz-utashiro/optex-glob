@@ -53,7 +53,7 @@ sub finalize {
 	    if ($opt{regex}) {
 		map qr/$_/, @$b;
 	    } else {
-		map qr/${ glob_to_regex($_) }/, @$b;
+		map glob_to_regex($_), @$b;
 	    }
 	};
     }
@@ -133,9 +133,10 @@ the filename.
 
 =head1 CONSIDERATION
 
-You should also consider using the extended globbing (B<extglob>)
-feature of L<bash(1)> or such.  For example, you can use C<!(*.EN).md>
-would specify files matching C<*.md> minus those matching C<*.EN.md>.
+You should also consider using the extended globbing (extglob) feature
+of L<bash(1)> or similar. For example, you can use C<!(*.EN).md>,
+which would specify files matching *.md minus those matching
+C<*.EN.md>.
 
 =head1 AUTHOR
 
