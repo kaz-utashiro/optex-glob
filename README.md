@@ -1,4 +1,4 @@
-
+[![Actions Status](https://github.com/kaz-utashiro/optex-glob/actions/workflows/test.yml/badge.svg)](https://github.com/kaz-utashiro/optex-glob/actions)
 # NAME
 
 glob - optex filter to glob filenames

@@ -43,6 +43,11 @@
       "runtime" : {
          "requires" : {
             "App::optex" : "1.00",
+            "File::Basename" : "0",
+            "Getopt::Long" : "0",
+            "Hash::Util" : "0",
+            "List::Util" : "0",
+            "Text::Glob" : "0",
             "perl" : "v5.14.0"
          }
       },
@@ -53,6 +58,17 @@
       }
    },
    "release_status" : "unstable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kaz-utashiro/optex-glob/issues"
+      },
+      "homepage" : "https://github.com/kaz-utashiro/optex-glob",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/kaz-utashiro/optex-glob.git",
+         "web" : "https://github.com/kaz-utashiro/optex-glob"
+      }
+   },
    "version" : "0.01",
    "x_contributors" : [
       "Kazumasa Utashiro <kaz@utashiro.com>"
