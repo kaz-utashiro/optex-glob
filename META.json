@@ -42,7 +42,7 @@
       },
       "runtime" : {
          "requires" : {
-            "App::optex" : "0",
+            "App::optex" : "1.00",
             "perl" : "v5.14.0"
          }
       },
@@ -54,6 +54,9 @@
    },
    "release_status" : "unstable",
    "version" : "0.01",
+   "x_contributors" : [
+      "Kazumasa Utashiro <kaz@utashiro.com>"
+   ],
    "x_serialization_backend" : "JSON::PP version 4.12",
    "x_static_install" : 1
 }
