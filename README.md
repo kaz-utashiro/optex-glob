@@ -20,7 +20,8 @@ Only existing file names will be selected.  Any arguments that do not
 correspond to files will be passed through as is.  In this example,
 the command name and options remain as they are because no
 corresponding file exists.  Be aware that the existence of a
-corresponding file could lead to confusing results.
+corresponding file for unexpected parameter could lead to confusing
+results.
 
 There are several unique options that are valid only for this module.
 

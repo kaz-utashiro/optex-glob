@@ -15,8 +15,8 @@ use File::Basename qw(basename);
 my %opt = (
     regex   => undef,
     path    => undef,
-    include => [],
-    exclude => [],
+    include => \my @include,
+    exclude => \my @exclude,
     debug   => undef,
 );
 lock_keys %opt;
@@ -25,7 +25,7 @@ use List::Util qw(pairmap);
 
 sub hash_to_spec {
     pairmap {
-	$a = "$a|${\(uc(substr($a, 0, 1)))}";
+	$a = "$a|${\(uc(substr($a,0,1)))}";
 	if    (not defined $b) { "$a"   }
 	elsif ($b =~ /^\d+$/)  { "$a=i" }
 	else                   { "$a=s" }
@@ -40,14 +40,16 @@ sub finalize {
 
     use Getopt::Long qw(GetOptionsFromArray);
     Getopt::Long::Configure qw(bundling);
-    GetOptions \%opt, hash_to_spec \%opt or die "Option parse error.\n";
+    GetOptions(\%opt,
+	       hash_to_spec(\%opt),
+	       '<>' => sub { push @include, shift },
+	   ) or die "Option parse error.\n";
 
-    push @{$opt{include}}, splice @ARGV;
-    return if @{$opt{include}} + @{$opt{exclude}} == 0;
+    return if @include + @exclude == 0;
 
     my(@include_re, @exclude_re);
-    for ( [ \@include_re, $opt{include} ] ,
-	  [ \@exclude_re, $opt{exclude} ] ) {
+    for ( [ \@include_re, \@include ] ,
+	  [ \@exclude_re, \@exclude ] ) {
 	my($a, $b) = @$_;
 	@$a = do {
 	    if ($opt{regex}) {
@@ -95,7 +97,8 @@ Only existing file names will be selected.  Any arguments that do not
 correspond to files will be passed through as is.  In this example,
 the command name and options remain as they are because no
 corresponding file exists.  Be aware that the existence of a
-corresponding file could lead to confusing results.
+corresponding file for unexpected parameter could lead to confusing
+results.
 
 There are several unique options that are valid only for this module.
 
