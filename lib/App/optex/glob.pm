@@ -66,7 +66,7 @@ sub finalize {
 	$_ = basename($_) if not $opt{path};
 	for my $re (@exclude_re) { /$re/ and return 0 }
 	for my $re (@include_re) { /$re/ and return 1 }
-	return @include_re > 0 ? 0 : 1;
+	return @include_re == 0;
     };
 
     @$argv = grep $test->($_), @$argv;
