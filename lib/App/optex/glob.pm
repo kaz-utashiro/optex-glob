@@ -12,14 +12,15 @@ use Hash::Util qw(lock_keys);
 use Text::Glob qw(glob_to_regex);
 use File::Basename qw(basename);
 
-my %opt = (
+use Getopt::EX::Config qw(config);
+my $config = Getopt::EX::Config->new(
     regex   => undef,
     path    => undef,
     include => \my @include,
     exclude => \my @exclude,
     debug   => undef,
 );
-lock_keys %opt;
+lock_keys %$config;
 
 use List::Util qw(pairmap);
 
@@ -34,17 +35,11 @@ sub hash_to_spec {
 
 sub finalize {
     my($mod, $argv) = @_;
-    my $i = (first { $argv->[$_] eq '--' } keys @$argv) // return;
-    splice @$argv, $i, 1; # remove '--'
-    local @ARGV = splice @$argv, 0, $i or return;
-
-    use Getopt::Long qw(GetOptionsFromArray);
-    Getopt::Long::Configure qw(bundling);
-    GetOptions(\%opt,
-	       hash_to_spec(\%opt),
-	       '<>' => sub { push @include, shift },
-	   ) or die "Option parse error.\n";
-
+    $config->deal_with(
+	$argv,
+	hash_to_spec($config),
+	'<>' => sub { push @include, shift },
+    );
     return if @include + @exclude == 0;
 
     my(@include_re, @exclude_re);
@@ -52,7 +47,7 @@ sub finalize {
 	  [ \@exclude_re, \@exclude ] ) {
 	my($a, $b) = @$_;
 	@$a = do {
-	    if ($opt{regex}) {
+	    if (config('regex')) {
 		map qr/$_/, @$b;
 	    } else {
 		map glob_to_regex($_), @$b;
@@ -63,7 +58,7 @@ sub finalize {
     my $test = sub {
 	local $_ = shift;
 	-e or return 1;
-	$_ = basename($_) if not $opt{path};
+	$_ = basename($_) if not config('path');
 	for my $re (@exclude_re) { /$re/ and return 0 }
 	for my $re (@include_re) { /$re/ and return 1 }
 	return @include_re == 0;
@@ -147,7 +142,7 @@ Kazumasa Utashiro
 
 =head1 LICENSE
 
-Copyright ©︎ 2024 Kazumasa Utashiro.
+Copyright ©︎ 2024-2025 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

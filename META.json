@@ -44,6 +44,7 @@
          "requires" : {
             "App::optex" : "1.00",
             "File::Basename" : "0",
+            "Getopt::EX::Config" : "0.9904",
             "Getopt::Long" : "0",
             "Hash::Util" : "0",
             "List::Util" : "0",
@@ -73,6 +74,6 @@
    "x_contributors" : [
       "Kazumasa Utashiro <kaz@utashiro.com>"
    ],
-   "x_serialization_backend" : "JSON::PP version 4.12",
+   "x_serialization_backend" : "JSON::PP version 4.16",
    "x_static_install" : 1
 }
