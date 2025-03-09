@@ -1,6 +1,6 @@
 package App::optex::glob;
 
-our $VERSION = '0.01';
+our $VERSION = '1.00';
 
 use v5.14;
 use warnings;
