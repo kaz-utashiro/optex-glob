@@ -25,11 +25,16 @@ results.
 
 There are several unique options that are valid only for this module.
 
+- **!**_pattern_
 - **--exclude** _pattern_
 
     Option `--exclude` will mean the opposite.
 
         optex -Mglob --exclude '*.c' -- ls */*
+
+    Preceding pattern with `!` will also exclude the pattern.
+
+        optex -Mglob '!*.c' -- ls */*
 
     If the `--exclude` option is used with positive patterns, the exclude
     pattern takes precedence.  The following command selects files

@@ -38,7 +38,14 @@ sub finalize {
     $config->deal_with(
 	$argv,
 	hash_to_spec($config),
-	'<>' => sub { push @include, shift },
+	'<>' => sub {
+		    my $pattern = shift;
+		    if ($pattern =~ s/^!//) {
+			push @exclude, $pattern;
+		    } else {
+			push @include, $pattern;
+		    }
+		},
     );
     return if @include + @exclude == 0;
 
@@ -99,11 +106,17 @@ There are several unique options that are valid only for this module.
 
 =over 7
 
+=item B<!>I<pattern>
+
 =item B<--exclude> I<pattern>
 
 Option C<--exclude> will mean the opposite.
 
     optex -Mglob --exclude '*.c' -- ls */*
+
+Preceding pattern with C<!> will also exclude the pattern.
+
+    optex -Mglob '!*.c' -- ls */*
 
 If the C<--exclude> option is used with positive patterns, the exclude
 pattern takes precedence.  The following command selects files
